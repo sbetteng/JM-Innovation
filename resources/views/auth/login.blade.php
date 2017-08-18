@@ -8,13 +8,13 @@
                     <form class="form-horizontal" role="form" method="POST" action="{{ route('login') }}">
                         {{ csrf_field() }}
 
-                        <div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}">
-                            <label class="col-md-4 control-label">username</label>
+                        <div class="form-group{{ $errors->has('npp') ? ' has-error' : '' }}">
+                            <label class="col-md-4 control-label">Username</label>
 
                             <div class="col-md-6">
                                 <input type="text" class="form-control" name="username" value="{{ old('username') }}">
 
-                                @if ($errors->has('username'))
+                                @if ($errors->has('npp'))
                                     <span class="help-block">
                                         <strong>{{ $errors->first('username') }}</strong>
                                     </span>

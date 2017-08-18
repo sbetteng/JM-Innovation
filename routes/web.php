@@ -12,22 +12,24 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('landing.welcome');
 });
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index');
+Route::post('logout','Auth\LoginController@logout')->name('logout');
+Route::get('logout','Auth\LoginController@logout')->name('GetLogout');
 
-Route::post('/logout','Auth\LoginController@logout')->name('logout');
-Route::get('/logout','Auth\LoginController@logout')->name('logout');
+Route::group(['middleware' => 'auth'],function (){
+    Route::get('/home', 'Admin\DashboardController@index')->name('home');
+    Route::middleware(['IsAdmin'])->namespace('Admin')->group(function (){
 
-// Route::group(['middleware' => 'Auth', 'prefix' => 'admin'], function(){
-// 	Route::get('/lip', 'HomeController@index')->name('lip.index');
-// });
+    });
+    Route::middleware(['IsUser'])->namespace('User')->group(function (){
+        Route::get('JMI/Lip','JMIController@index')->name('JMI.index');
+    });
+    Route::namespace('User')->group(function () {
 
-// Route::get('/lip','HomeController@index')->name('lip.index');
 
-Route::get('/lip', function (){
-	return view('admin.lip.index');
+    });
 });
